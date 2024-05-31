@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+.home-container {
+    color: #004d40;
+    /* Verde oscuro para el texto */
+    background-color: #e8f5e9;
+    /* Blanco verdoso para el fondo */
+    font-family: 'Montserrat', sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.club-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.club-logo {
+    width: 10em;
+    /* Ajusta según el tamaño deseado */
+}
+
+.club-name {
+    color: #004d40;
+    margin-top: 10px;
+}
+
+.section-title {
+    color: #004d40;
+    margin-bottom: 20px;
+}
+
+.section-description {
+    color: #004d40;
+    line-height: 1.6;
+}
+
+.welcome-section,
+.club-info-section,
+.additional-info-section {
+    background-color: #ffffff;
+    /* Blanco puro para las secciones */
+    padding: 30px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.join-btn {
+    background-color: #004d40;
+    /* Verde oscuro para el botón */
+    color: #ffffff;
+    /* Texto blanco */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.join-btn:hover {
+    background-color: #00382e;
+    /* Verde más oscuro al pasar el mouse */
+}
+
+.club-footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #004d40;
+    /* Verde oscuro para el pie de página */
+    color: #ffffff;
+    /* Texto blanco */
+}
+
+/* Añade tus propios estilos aquí */
