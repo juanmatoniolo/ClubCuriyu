@@ -38,7 +38,13 @@
 
 .welcome-section,
 .club-info-section,
-.additional-info-section {
+.additional-info-section,
+.history-section,
+.values-section,
+.community-section,
+.activities-section,
+.resources-section,
+.testimonials-section {
     background-color: #ffffff;
     /* Blanco puro para las secciones */
     padding: 30px;
@@ -52,7 +58,8 @@
     margin-top: 20px;
 }
 
-.join-btn {
+.join-btn,
+.map-btn {
     background-color: #004d40;
     /* Verde oscuro para el botón */
     color: #ffffff;
@@ -65,7 +72,8 @@
     transition: background-color 0.3s ease;
 }
 
-.join-btn:hover {
+.join-btn:hover,
+.map-btn:hover {
     background-color: #00382e;
     /* Verde más oscuro al pasar el mouse */
 }

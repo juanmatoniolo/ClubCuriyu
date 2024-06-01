@@ -1,10 +1,11 @@
 import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FaUser, FaSignInAlt } from "react-icons/fa";
-import logo from "../../assets/curiyu-cambios.png";
+import { FaUser } from "react-icons/fa";
+/* import logo from "../../assets/curiyu-cambios.png"; */
 import logo2 from "../../assets/curi-IA.png";
 import "./navbar.css";
+import { Link } from "react-router-dom";
 
 function NavBar() {
 	return (
@@ -16,26 +17,24 @@ function NavBar() {
 		>
 			<div className="container-navbarr ">
 				<div className="container-logo">
-					<img
-						src={logo2}
-						alt="Curiyu Cambios"
-						className="logoCuriyu"
-					/>
+					<Link to="/">
+						<img
+							src={logo2}
+							alt="Curiyu Cambios"
+							className="logoCuriyu"
+						/>
+					</Link>
 					<h3 className=" h1curiyu">Club Curiyú</h3>
 				</div>
 
-				<div className="ocultar">
-					<div className="a1">
-						<FaUser className="path-icon path-tablet" />
-						<Nav.Link className="contenedor-iconos" href="#">
-							Sign Up
-						</Nav.Link>
-					</div>
-					<div className="a2">
-						<FaSignInAlt className="path-icon path-tablet" />
-						<Nav.Link className="contenedor-iconos" href="#">
-							Login
-						</Nav.Link>
+				<div className="ocultar ">
+					<div className="a1 btn btn-success">
+						<Link to="/Login">
+							<FaUser className="path-icon path-tablet" />
+							<Nav.Link className="contenedor-iconos">
+								Login
+							</Nav.Link>
+						</Link>
 					</div>
 				</div>
 
@@ -45,23 +44,19 @@ function NavBar() {
 				<Navbar.Collapse id="basic-navbar-nav navbar-collapse">
 					<div className="containerNav1">
 						<Nav className="me-auto">
-							<Nav.Link href="#" className="active">
+							<Link to="/" className="active">
 								Home
-							</Nav.Link>
-							<Nav.Link href="#">Noticias</Nav.Link>
-							<Nav.Link href="#">Hockey</Nav.Link>
-							<Nav.Link href="#">Rugby</Nav.Link>
+							</Link>
+							<Link to="/Noticias">Noticias</Link>
+							<Link to="/Hockey">Hockey</Link>
+							<Link to="/Rugby">Rugby</Link>
 						</Nav>
 					</div>
-					<div className="containerNav2 mostrar">
-						<Nav className="ms-auto">
-							<Nav.Link className="contenedor-iconos" href="#">
-								<FaUser className="path-icon" /> Sign Up
-							</Nav.Link>
-							<Nav.Link className="contenedor-iconos" href="#">
-								<FaSignInAlt className="path-icon" /> Login
-							</Nav.Link>
-						</Nav>
+					<div className="containerNav2  btn btn-success mostrar">
+						<Link className="contenedor-iconos" to="/Login">
+							<FaUser className="path-icon" />
+							Login
+						</Link>
 					</div>
 				</Navbar.Collapse>
 			</div>

@@ -3,8 +3,15 @@ import "./whatsapp.css";
 
 function WhatsAppButton() {
 	const handleWhatsAppClick = () => {
+		const phoneNumber = "+5493412275598";
+		const customMessage =
+			"¡Hola! Estoy interesado en saber más sobre Curiyú!";
+		const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+			customMessage
+		)}`;
+		window.open(url, "_blank");
 		// Redirigir al usuario a la URL de WhatsApp
-		window.open("https://wa.me/+5493412275598", "_blank");
+		window.open(url);
 	};
 
 	return (

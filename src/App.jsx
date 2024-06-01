@@ -1,32 +1,29 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import ControlledCarousel from "./components/Carrusel/carrusel";
-import a from "./assets/slider/1.jpeg";
-import b from "./assets/slider/2.jpg";
-import c from "./assets/slider/3.webp";
-import d from "./assets/slider/4.jpg";
-import NavBar from "./components/nav/Navbar";
-import Home from "./components/Home/Home";
-import Footer from "./components/Footer/FooterCuri";
+import HomePage from "./pages/Home/Home.page.jsx";
+import { Route, Routes } from "react-router-dom";
+import Rugby from "./pages/Rugby/Rugby.jsx";
+import Hockey from "./pages/Hockey/Hockey.jsx";
+import Noticias from "./pages/News/New.jsx";
+import Login from "./pages/Login/Login";
+/* import Edit from "./pages/edit/edit.jsx"; */
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
+	/* 	const isLoggedIn = false; // Aquí debes reemplazar con la lógica para verificar si el usuario está logueado */
 	return (
-		<div>
-			<NavBar />
-			<br></br>
-			<div className="container contenedor-carrusel">
-				<ControlledCarousel
-					a={a}
-					b={b}
-					c={c}
-					d={d}
-					IMGCarrusel="IMGCarrusel"
-				/>
-			</div>
-			<Home />
-			<Footer/>
-		</div>
+		<>
+			<BrowserRouter>
+				<Routes>
+					<Route path="/" element={<HomePage />} />
+					<Route path="Rugby" element={<Rugby />} />
+					<Route path="Hockey" element={<Hockey />} />
+					<Route path="Login" element={<Login />} />
+					<Route path="Noticias" element={<Noticias />} />
+				</Routes>
+			</BrowserRouter>
+		</>
 	);
 }
 

@@ -24,6 +24,14 @@ NavBar
                     ∟ contenedor-iconos
                         ∟ path-icon
 */
+/**************************************************************************/
+
+
+
+a {
+    text-decoration: none;
+    color: aliceblue;
+}
 
 
 
@@ -55,10 +63,7 @@ NavBar
     /* Estilos para el contenedor del logo */
 }
 
-/* .container-logo hijos */
-/* .logoCuriyu {
 
-} */
 
 .h1curiyu {
     /* Estilos para el texto "Club Curiyú" */
@@ -92,13 +97,7 @@ NavBar
     margin-right: .8em;
 }
 
-/* 
-.contenedor-iconos {
 
-}
-
-.path-icon {
-} */
 
 /* .container-navbar hijos */
 .container-fluid.container-navbar2 {
@@ -109,25 +108,7 @@ NavBar
     margin-top: .4em;
 }
 
-/* 
-.containerNav1 {
-}
 
-.me-auto {
-}
-
-.nav-link {
-}
-
-.nav-link.active {
-}
-
-.containerNav2 {
-}
-
-.mostrar {
-}
- */
 
 .contenedor-iconos {
     display: flex;
@@ -174,19 +155,20 @@ NavBar
 
     .ocultar {
         font-size: 1.2em;
-        width: 100%;
-        justify-content: flex-end;
+        width: 50%;
+        justify-content: end;
         margin-right: 1em;
 
     }
 
-    .a1,
-    .a2 {
+    .a1 {
         font-size: .8em;
-        margin-right: 1em;
+        width: 20%;
         display: flex;
         flex-flow: column nowrap;
         align-items: center;
+        justify-content: center;
+
     }
 
 }
@@ -209,19 +191,20 @@ NavBar
 
     .ocultar {
         font-size: 1.2em;
-        width: 100%;
-        justify-content: flex-end;
+        width: 50%;
+        justify-content: end;
         margin-right: 1em;
 
     }
 
-    .a1,
-    .a2 {
-        font-size: 1em;
-        margin-right: 1em;
+    .a1 {
+        font-size: .8em;
+        width: 20%;
         display: flex;
-        flex-flow: row nowrap;
+        flex-flow: column nowrap;
         align-items: center;
+        justify-content: center;
+
     }
 
 }
@@ -232,7 +215,6 @@ NavBar
         width: 100%;
         display: flex;
         flex-flow: row nowrap;
-
     }
 
     .container-navbarr {

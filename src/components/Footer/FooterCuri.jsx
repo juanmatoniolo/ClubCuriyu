@@ -5,6 +5,7 @@ import {
 	FaFacebook,
 	FaWhatsapp,
 	FaPhoneAlt,
+	FaMapMarkerAlt 
 } from "react-icons/fa";
 
 const Footer = () => {
@@ -19,7 +20,7 @@ const Footer = () => {
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						Ver en Google Maps
+					<FaMapMarkerAlt/>	Ver en Google Maps
 					</a>
 				</div>
 
