@@ -13,7 +13,7 @@ const ControlledCarousel = ({ a, b, c, d }) => {
     useEffect(() => {
         const interval = setInterval(() => {
             setIndex((prevIndex) => (prevIndex + 1) % 4); // Ciclo entre 0 y 3
-        }, 4000);
+        }, 15000);
         return () => clearInterval(interval);
     }, []);
 

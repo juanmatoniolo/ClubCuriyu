@@ -17,10 +17,12 @@ function App() {
 			<BrowserRouter>
 				<Routes>
 					<Route path="/" element={<HomePage />} />
+					<Route path="/clubcuriyu" element={<HomePage />} />
 					<Route path="Rugby" element={<Rugby />} />
 					<Route path="Hockey" element={<Hockey />} />
 					<Route path="Login" element={<Login />} />
 					<Route path="Noticias" element={<Noticias />} />
+					
 				</Routes>
 			</BrowserRouter>
 		</>

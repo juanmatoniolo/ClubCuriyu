@@ -44,7 +44,7 @@ function NavBar() {
 				<Navbar.Collapse id="basic-navbar-nav navbar-collapse">
 					<div className="containerNav1">
 						<Nav className="me-auto">
-							<Link to="/" className="active">
+							<Link to="/clubcuriyu" className="active">
 								Home
 							</Link>
 							<Link to="/Noticias">Noticias</Link>
