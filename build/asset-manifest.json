@@ -1,19 +1,25 @@
 {
   "files": {
-    "main.css": "/clubcuriyu/static/css/main.4be08825.css",
-    "main.js": "/clubcuriyu/static/js/main.48585367.js",
+    "main.css": "/clubcuriyu/static/css/main.a822492b.css",
+    "main.js": "/clubcuriyu/static/js/main.d5163f1f.js",
+    "static/media/4.jpg": "/clubcuriyu/static/media/4.4e099a91edbc886bfd32.jpg",
+    "static/media/2.jpg": "/clubcuriyu/static/media/2.8b535614f5ea4896c882.jpg",
+    "static/media/6.jpg": "/clubcuriyu/static/media/6.5d37a1de9fd0b839030c.jpg",
+    "static/media/7.jpg": "/clubcuriyu/static/media/7.dc18fa574df4e785db40.jpg",
+    "static/media/1.jpg": "/clubcuriyu/static/media/1.0480b597db7979825396.jpg",
+    "static/media/8.jpg": "/clubcuriyu/static/media/8.7f240c9d810af40a1000.jpg",
+    "static/media/5.jpg": "/clubcuriyu/static/media/5.0c56b945ec8b1e0e1b57.jpg",
+    "static/media/3.jpg": "/clubcuriyu/static/media/3.38182982e8bcd62fc370.jpg",
     "static/media/curi-IA.png": "/clubcuriyu/static/media/curi-IA.50606dccd4569f9d9cbe.png",
+    "static/media/9.jpg": "/clubcuriyu/static/media/9.b54907984579837ad95a.jpg",
+    "static/media/10.jpg": "/clubcuriyu/static/media/10.532c145fd8e2f0751086.jpg",
     "static/media/curiyu-cambios.png": "/clubcuriyu/static/media/curiyu-cambios.272bfdffb48116bc15ee.png",
-    "static/media/2.jpg": "/clubcuriyu/static/media/2.a4ac0dd4533181cb17af.jpg",
-    "static/media/3.webp": "/clubcuriyu/static/media/3.7a69ed0af34172d8023b.webp",
-    "static/media/1.jpeg": "/clubcuriyu/static/media/1.da402f4f4b84029bfd6c.jpeg",
-    "static/media/4.jpg": "/clubcuriyu/static/media/4.3cabdec88fbdb0609c9b.jpg",
     "index.html": "/clubcuriyu/index.html",
-    "main.4be08825.css.map": "/clubcuriyu/static/css/main.4be08825.css.map",
-    "main.48585367.js.map": "/clubcuriyu/static/js/main.48585367.js.map"
+    "main.a822492b.css.map": "/clubcuriyu/static/css/main.a822492b.css.map",
+    "main.d5163f1f.js.map": "/clubcuriyu/static/js/main.d5163f1f.js.map"
   },
   "entrypoints": [
-    "static/css/main.4be08825.css",
-    "static/js/main.48585367.js"
+    "static/css/main.a822492b.css",
+    "static/js/main.d5163f1f.js"
   ]
 }

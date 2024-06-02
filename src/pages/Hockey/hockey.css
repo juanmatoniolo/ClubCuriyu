@@ -1,0 +1,175 @@
+.hockey-container {
+    color: #004d40;
+    background-color: #e8f5e9;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.main-title {
+    font-size: 2.5em;
+    color: #004d40;
+    margin-bottom: 10px;
+    font-weight: 700;
+    margin: 1em;
+}
+
+.content-section {
+    text-align: justify;
+    border: solid 1px #fff;
+    border-radius: 28px;
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 40px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.section-description {
+    margin-bottom: 20px;
+    font-size: 1em;
+    text-align: justify;
+}
+
+.training-table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+.training-table th,
+.training-table td {
+    border: 1px solid #004d40;
+    padding: 8px;
+    text-align: left;
+}
+
+.training-table th {
+    background-color: #004d40;
+    color: #ffffff;
+}
+
+.join-btn {
+    display: block;
+    width: max-content;
+    margin: 20px auto;
+    background-color: #004d40;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.join-btn:hover {
+    background-color: #00382e;
+}
+
+.schedule-section {
+    background-color: #fff;
+    border-radius: 28px;
+    margin-top: 5em;
+    padding: 1em;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    gap: 1.3em;
+}
+
+.card-title {
+    font-size: larger;
+    font-weight: 600;
+    text-align: center;
+}
+
+.training-card {
+    font-weight: 500;
+    width: 50%;
+    margin: auto;
+}
+
+@media (max-width: 767.98px) {
+    .main-title {
+        font-size: 1.6em;
+    }
+
+    .training-card {
+        font-weight: 500;
+        width: 90%;
+        margin: auto;
+    }
+
+    .section-title {
+        font-size: 1.4em;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .main-title {
+        font-size: 1.4em;
+    }
+
+    .training-card {
+        font-weight: 500;
+        width: 90%;
+        margin: auto;
+    }
+
+    .section-title {
+        font-size: 1.4em;
+        margin-top: 1em;
+    }
+
+    .section-description {
+        font-size: .9em;
+    }
+}
+
+.gallery-section {
+    margin-bottom: 40px;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.gallery-image {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.testimonials-section {
+    margin-bottom: 40px;
+}
+
+.testimonial-card {
+    margin-bottom: 20px;
+}
+
+.news-section {
+    margin-bottom: 40px;
+}
+
+.news-card {
+    margin-bottom: 20px;
+}
+
+.contact-section {
+    margin-bottom: 40px;
+}
