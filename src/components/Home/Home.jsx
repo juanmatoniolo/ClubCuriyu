@@ -2,6 +2,11 @@ import React from "react";
 import "./home.css";
 import logo from "../../assets/curiyu-cambios.png";
 import WhatsAppButton from "../btnWhatsapp/Whatsapp.jsx";
+import ControlledCarousel from "../Carrusel/carrusel.jsx";
+import a from "../../assets/slider/1.jpg";
+import b from "../../assets/slider/2.jpg";
+import c from "../../assets/slider/3.jpg";
+import d from "../../assets/slider/4.jpg";
 
 function Home() {
 	const phoneNumber = "+5493412275598";
@@ -34,13 +39,24 @@ function Home() {
 						ambiente de camaradería y respeto. Únase a nuestra
 						comunidad y crezca con nosotros.
 					</p>
-					<div className="action-buttons">
+
+					<div className="container contenedor-carrusel-principal"></div>
+					<div className="container contenedor-carrusel">
+						<ControlledCarousel
+							a={a}
+							b={b}
+							c={c}
+							d={d}
+							IMGCarrusel="IMGCarrusel "
+						/>
+								<div className="action-buttons">
 						<button
 							className="join-btn"
 							onClick={handleWhatsAppClick}
 						>
 							Únase Ahora
 						</button>
+					</div>
 					</div>
 				</article>
 				<WhatsAppButton />

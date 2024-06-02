@@ -5,8 +5,6 @@
 
 /* Estilos para pantallas pequeñas */
 @media (min-width: 576px) and (max-width: 767.98px) {
-
-
 }
 
 /* Estilos para pantallas medianas */
