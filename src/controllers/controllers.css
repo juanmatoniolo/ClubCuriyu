@@ -1,0 +1,300 @@
+/*////////////////////////////////////////////////////////*/
+/*		CREATE		*/
+
+/* src/components/news.css */
+.news-manager {
+	padding: 20px;
+	background-color: #f9f9f9;
+}
+
+.news-manager h2 {
+	color: #006400;
+	/* Verde oscuro */
+}
+
+.news-manager input,
+.news-manager textarea {
+	display: block;
+	margin-bottom: 10px;
+	padding: 10px;
+	width: 100%;
+	max-width: 400px;
+	border: 1px solid #cccccc;
+	border-radius: 5px;
+}
+
+.news-manager button {
+	background-color: #006400;
+	/* Verde oscuro */
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-bottom: 10px;
+}
+
+.news-manager button:hover {
+	background-color: #004d00;
+	/* Verde más oscuro */
+}
+
+.success-message {
+	color: green;
+}
+
+.error-message {
+	color: red;
+}
+
+/*//////////////////////////////////////////////////////////////*/
+/*		GET		*/
+/* src/components/news.css */
+.news-list-container {
+	padding: 20px;
+	background-color: #f9f9f9;
+}
+
+.news-list-container h2 {
+	color: #006400;
+	/* Verde oscuro */
+}
+
+.news-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	margin-top: 20px;
+}
+
+.news-item {
+	background-color: white;
+	border: 1px solid #cccccc;
+	border-radius: 8px;
+	width: 80%;
+	margin: 20px 0;
+	padding: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	transition: transform 0.2s ease;
+}
+
+.news-item:hover {
+	transform: translateY(-5px);
+}
+
+.news-title {
+	color: #006400;
+	/* Verde oscuro */
+	font-size: 24px;
+	margin-bottom: 10px;
+}
+
+.news-author,
+.news-subject,
+.news-date {
+	color: #333333;
+	/* Gris oscuro */
+	margin-bottom: 5px;
+}
+
+.news-image {
+	width: 100%;
+	height: auto;
+	border-radius: 8px;
+	margin: 10px 0;
+}
+
+.news-text {
+	color: #555555;
+	/* Gris medio */
+	font-size: 16px;
+	line-height: 1.5;
+	margin-bottom: 10px;
+}
+
+.news-link {
+	color: #006400;
+	/* Verde oscuro */
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.news-link:hover {
+	text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+	.news-item {
+		width: 45%;
+	}
+}
+
+
+/*//////////////////////////////////////////////////////////*
+/* CRUD	*/
+/* src/components/crud.css */
+
+.crud-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.note-item {
+	margin-bottom: 20px;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+.edit-button,
+.delete-button {
+	margin-left: 10px;
+	padding: 5px 10px;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.edit-button {
+	background-color: #007bff;
+	color: white;
+}
+
+.delete-button {
+	background-color: #dc3545;
+	color: white;
+}
+
+.edit-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.edit-modal-content {
+	background-color: white;
+	padding: 20px;
+	border-radius: 5px;
+}
+
+.close-button {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+.edit-modal input[type="text"],
+.edit-modal textarea {
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+}
+
+.edit-modal button {
+	padding: 5px 10px;
+	border: none;
+	border-radius: 3px;
+	background-color: #007bff;
+	color: white;
+	cursor: pointer;
+}
+
+/*/////////////////////////////////////////////////////////////////////*/
+/*	CONTROLLERS	*/
+
+/* controllers.css */
+
+/* Estilos para el contenedor principal */
+.news-list-container {
+	margin: 20px;
+}
+
+/* Estilos para cada noticia */
+.news-item {
+	margin-bottom: 20px;
+	padding: 20px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	background-color: #f9f9f9;
+}
+
+/* Estilos para el título de la noticia */
+.news-title {
+	margin-top: 0;
+	font-size: 20px;
+	color: #333;
+}
+
+/* Estilos para los botones de acción */
+.news-actions button {
+	margin-right: 10px;
+	cursor: pointer;
+	padding: 5px 10px;
+	border: none;
+	border-radius: 3px;
+	background-color: #007bff;
+	color: #fff;
+}
+
+.news-actions button:hover {
+	background-color: #0056b3;
+}
+
+/* Estilos para el tooltip de edición */
+.tooltip {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: 20px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	z-index: 999;
+	/* Asegura que el tooltip esté por encima de otros elementos */
+}
+
+.tooltip h3 {
+	margin-top: 0;
+	margin-bottom: 10px;
+	font-size: 18px;
+}
+
+.tooltip label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+.tooltip input,
+.tooltip textarea {
+	width: 100%;
+	padding: 8px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+}
+
+.tooltip button {
+	padding: 8px 16px;
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.tooltip button:hover {
+	background-color: #0056b3;
+}

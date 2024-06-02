@@ -1,16 +1,18 @@
-import React from "react";
+import "./new.css"; // Asegúrate de que la ruta del archivo CSS es correcta
 import NavBar from "../../components/nav/Navbar";
+import Footer from "../../components/Footer/FooterCuri.jsx";
+import Noticias from "../../controllers/get.jsx";
+import CreateNews from "../../controllers/create.jsx"  
 
-function Noticias() {
+function NewsList() {
 	return (
 		<>
 			<NavBar />
-			<div>
-				<h1>Noticias</h1>
-				<p>Últimas noticias...</p>
-			</div>
+			{<CreateNews/>}
+			<Noticias/>
+			<Footer />
 		</>
 	);
 }
 
-export default Noticias;
+export default NewsList;
