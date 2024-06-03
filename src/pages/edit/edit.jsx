@@ -1,12 +1,15 @@
 import React from "react";
-
+import NavBarEdit from "./NavBarEdit.jsx";
+import CrudList from "../../controllers/controllers.jsx";
+import Footer from "../../components/Footer/FooterCuri.jsx";
 function Edit() {
-    return (
-        <div>
-            <h1>Editar</h1>
-            <p>Página de edición...</p>
-        </div>
-    );
+	return (
+		<>
+			<NavBarEdit />
+			<CrudList />
+			<Footer />
+		</>
+	);
 }
 
 export default Edit;

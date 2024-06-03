@@ -8,8 +8,8 @@ import Hockey from "./pages/Hockey/Hockey.jsx";
 import Noticias from "./pages/News/New.jsx";
 import Login from "./pages/Login/Login";
 import { BrowserRouter } from "react-router-dom";
-import CrudList from "./controllers/controllers.jsx";
 import ProtectedRoute from "./pages/Login/ProtectedRoute"; // Importa el componente de ruta protegida
+import Edit from "./pages/edit/edit.jsx";
 
 function App() {
 	return (
@@ -25,7 +25,7 @@ function App() {
 					path="/crud"
 					element={
 						<ProtectedRoute>
-							<CrudList />
+							<Edit />
 						</ProtectedRoute>
 					}
 				/>
