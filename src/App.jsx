@@ -9,24 +9,28 @@ import Noticias from "./pages/News/New.jsx";
 import Login from "./pages/Login/Login";
 import { BrowserRouter } from "react-router-dom";
 import CrudList from "./controllers/controllers.jsx";
+import ProtectedRoute from "./pages/Login/ProtectedRoute"; // Importa el componente de ruta protegida
 
 function App() {
-	/* 	const isLoggedIn = false; // Aquí debes reemplazar con la lógica para verificar si el usuario está logueado */
 	return (
-		<>
-			<BrowserRouter>
-				<Routes>
-					<Route path="/" element={<HomePage />} />
-					<Route path="/clubcuriyu" element={<HomePage />} />
-					<Route path="/Rugby" element={<Rugby />} />
-					<Route path="/Hockey" element={<Hockey />} />
-					<Route path="/Login" element={<Login />} />
-					<Route path="/Noticias" element={<Noticias />} />
-					<Route path="/crud" element={<CrudList />} />
-					
-				</Routes>
-			</BrowserRouter>
-		</>
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<HomePage />} />
+				<Route path="/clubcuriyu" element={<HomePage />} />
+				<Route path="/Rugby" element={<Rugby />} />
+				<Route path="/Hockey" element={<Hockey />} />
+				<Route path="/Login" element={<Login />} />
+				<Route path="/Noticias" element={<Noticias />} />
+				<Route
+					path="/crud"
+					element={
+						<ProtectedRoute>
+							<CrudList />
+						</ProtectedRoute>
+					}
+				/>
+			</Routes>
+		</BrowserRouter>
 	);
 }
 
