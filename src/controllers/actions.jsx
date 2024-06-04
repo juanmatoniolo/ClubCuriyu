@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Modal, Button } from "react-bootstrap";
 import "./controllers.css";
 
-const Actions = () => {
+const GetList = () => {
 	const [news, setNews] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-	const [showModal, setShowModal] = useState(false);
-	const [selectedNote, setSelectedNote] = useState(null);
-	const [fieldBeingEdited, setFieldBeingEdited] = useState(null);
+	const [editingNote, setEditingNote] = useState(null); // Estado para almacenar la nota que se está editando
+	const [showModal, setShowModal] = useState(false); // Estado para controlar la visualización del modal
 
 	useEffect(() => {
 		const fetchNews = async () => {
@@ -18,7 +16,6 @@ const Actions = () => {
 					"https://clubcuriyu-9adcc-default-rtdb.firebaseio.com/database/news.json"
 				);
 
-				// Verificar si la respuesta contiene datos válidos
 				if (
 					response.data &&
 					typeof response.data === "object" &&
@@ -27,7 +24,6 @@ const Actions = () => {
 					setNews(response.data);
 					setLoading(false);
 				} else {
-					// Si no hay datos válidos, establecer el estado de carga en falso y dejar el estado de noticias vacío
 					setLoading(false);
 					setNews([]);
 				}
@@ -40,58 +36,49 @@ const Actions = () => {
 		fetchNews();
 	}, []);
 
-	const handleDeleteNote = async (id) => {
+	const handleDelete = async (id) => {
 		try {
+			// Eliminar la nota de la base de datos utilizando el id
 			await axios.delete(
 				`https://clubcuriyu-9adcc-default-rtdb.firebaseio.com/database/news/${id}.json`
 			);
-
-			// Eliminar el elemento de la lista localmente
+			// Actualizar la lista de noticias después de eliminar
 			setNews((prevNews) => {
 				const updatedNews = { ...prevNews };
-				delete updatedNews[id]; // Eliminar la noticia con el ID correspondiente
+				delete updatedNews[id];
 				return updatedNews;
 			});
-
-			console.log(`Nota con ID ${id} eliminada exitosamente.`);
-		} catch (error) {
-			console.error(`Error al eliminar la nota con ID ${id}:`, error);
+		} catch (err) {
+			setError(err.message);
 		}
 	};
 
-	const openModal = (id) => {
-		setSelectedNote(news[id]);
-		setShowModal(true);
-	};
-
-	const closeModal = () => {
-		setShowModal(false);
-		setSelectedNote(null);
-		setFieldBeingEdited(null);
-	};
-
-	const handleFieldChange = (fieldName) => {
-		setFieldBeingEdited(fieldName);
-	};
-
-	const handleUpdateNote = async (id, updatedNote) => {
+	const handleEdit = async (id) => {
 		try {
-			await axios.put(
-				`https://clubcuriyu-9adcc-default-rtdb.firebaseio.com/database/news/${id}.json`,
-				updatedNote
+			// Obtener los datos de la nota a editar utilizando el id
+			const response = await axios.get(
+				`https://clubcuriyu-9adcc-default-rtdb.firebaseio.com/database/news/${id}.json`
 			);
+			// Almacenar los datos de la nota que se está editando
+			setEditingNote({ ...response.data, id });
+			// Mostrar el modal
+			setShowModal(true);
+		} catch (err) {
+			setError(err.message);
+		}
+	};
 
-			// Actualizar el estado localmente
-			setNews((prevNews) => {
-				const updatedNews = { ...prevNews };
-				updatedNews[id] = updatedNote; // Actualizar la nota con el ID correspondiente
-				return updatedNews;
-			});
-
-			console.log(`Nota con ID ${id} actualizada exitosamente.`);
+	const handleUpdate = async () => {
+		try {
+			// Realizar una solicitud PATCH para actualizar la nota
+			await axios.patch(
+				`https://clubcuriyu-9adcc-default-rtdb.firebaseio.com/database/news/${editingNote.id}.json`,
+				editingNote
+			);
+			// Cerrar el modal después de actualizar
 			setShowModal(false);
-		} catch (error) {
-			console.error(`Error al actualizar la nota con ID ${id}:`, error);
+		} catch (err) {
+			setError(err.message);
 		}
 	};
 
@@ -153,18 +140,12 @@ const Actions = () => {
 											Leer más
 										</a>
 									)}
-									<Button
-										variant="danger"
-										onClick={() => handleDeleteNote(key)}
-									>
-										Eliminar
-									</Button>
-									<Button
-										variant="primary"
-										onClick={() => openModal(key)}
-									>
+									<button onClick={() => handleEdit(key)}>
 										Editar
-									</Button>
+									</button>
+									<button onClick={() => handleDelete(key)}>
+										Eliminar
+									</button>
 								</div>
 							);
 						} else {
@@ -177,109 +158,40 @@ const Actions = () => {
 					})}
 				</div>
 			</div>
-
 			{/* Modal para editar la nota */}
-			<Modal show={showModal} onHide={closeModal}>
-				<Modal.Header closeButton>
-					<Modal.Title>Editar Noticia</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<form
-						onSubmit={(e) => {
-							e.preventDefault();
-							const updatedNote = {
-								asunto: e.target.asunto.value,
-								autor: e.target.autor.value,
-								data: e.target.data.value,
-								img1: e.target.img1.value,
-								texto: e.target.texto.value,
-								url: e.target.url.value,
-							};
-							handleUpdateNote(selectedNote.id, updatedNote);
-						}}
-					>
-						<div className="form-group">
-							<label htmlFor="asunto">Asunto</label>
+			{showModal && (
+				<div className="modal">
+					<div className="modal-content">
+						<span
+							className="close"
+							onClick={() => setShowModal(false)}
+						>
+							&times;
+						</span>
+						<h2>Editar Nota</h2>
+						<form onSubmit={handleUpdate}>
+							{/* Aquí mostrar los campos para editar la nota */}
+							<label htmlFor="asunto">Asunto:</label>
 							<input
 								type="text"
+								id="asunto"
 								name="asunto"
-								className="form-control"
-								defaultValue={
-									selectedNote ? selectedNote.asunto : ""
+								value={editingNote.asunto}
+								onChange={(e) =>
+									setEditingNote({
+										...editingNote,
+										asunto: e.target.value,
+									})
 								}
-								onChange={() => handleFieldChange("asunto")}
 							/>
-						</div>
-						<div className="form-group">
-							<label htmlFor="autor">Autor</label>
-							<input
-								type="text"
-								name="autor"
-								className="form-control"
-								defaultValue={
-									selectedNote ? selectedNote.autor : ""
-								}
-								onChange={() => handleFieldChange("autor")}
-							/>
-						</div>
-						<div className="form-group">
-							<label htmlFor="data">Fecha</label>
-							<input
-								type="text"
-								name="data"
-								className="form-control"
-								defaultValue={
-									selectedNote ? selectedNote.data : ""
-								}
-								onChange={() => handleFieldChange("data")}
-							/>
-						</div>
-						<div className="form-group">
-							<label htmlFor="img1">Imagen</label>
-							<input
-								type="text"
-								name="img1"
-								className="form-control"
-								defaultValue={
-									selectedNote ? selectedNote.img1 : ""
-								}
-								onChange={() => handleFieldChange("img1")}
-							/>
-						</div>
-						<div className="form-group">
-							<label htmlFor="texto">Texto</label>
-							<textarea
-								name="texto"
-								className="form-control"
-								defaultValue={
-									selectedNote ? selectedNote.texto : ""
-								}
-								onChange={() => handleFieldChange("texto")}
-							/>
-						</div>
-						<div className="form-group">
-							<label htmlFor="url">URL</label>
-							<input
-								type="text"
-								name="url"
-								className="form-control"
-								defaultValue={
-									selectedNote ? selectedNote.url : ""
-								}
-								onChange={() => handleFieldChange("url")}
-							/>
-						</div>
-						<Button variant="primary" type="submit">
-							Guardar
-						</Button>
-						<Button variant="secondary" onClick={closeModal}>
-							Cancelar
-						</Button>
-					</form>
-				</Modal.Body>
-			</Modal>
+							{/* Otros campos de la nota */}
+							<button type="submit">Guardar Cambios</button>
+						</form>
+					</div>
+				</div>
+			)}
 		</>
 	);
 };
 
-export default Actions;
+export default GetList;

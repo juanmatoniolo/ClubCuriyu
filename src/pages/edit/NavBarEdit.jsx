@@ -4,8 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { FaUser } from "react-icons/fa";
 /* import logo from "../../assets/curiyu-cambios.png"; */
 import logo2 from "../../assets/curi-IA.png";
-import "./edit.css";
 import { Link, useNavigate } from "react-router-dom";
+import "./edit.css";
+
 
 function NavBarEdit() {
 	const navigate = useNavigate();
@@ -18,11 +19,16 @@ function NavBarEdit() {
 
 	return (
 		<Navbar
-			bg="success"
-			variant="dark"
-			expand="lg"
-			className="container-navbar"
-		>
+    bg="success"
+    variant="dark"
+    expand="lg"
+    className="container-navbar"
+    style={{
+        display: "flex",
+        flexBasis: "auto", // Cambié flex-basis a flexBasis
+        justifyContent: "flex-end"
+    }}
+>
 			<div className="container-navbarr ">
 				<div className="container-logo">
 					<Link to="/">
@@ -36,7 +42,7 @@ function NavBarEdit() {
 				</div>
 
 				<div className="ocultar ">
-					<div className="a1 btn btn-success">
+					<div className="a11 btn btn-success">
 						{isAuthenticated ? (
 							<div onClick={handleLogout} className="contenedor-iconos">
 								<FaUser className="path-icon path-tablet" />
@@ -45,17 +51,17 @@ function NavBarEdit() {
 						) : (
 							<Link to="/Login">
 								<FaUser className="path-icon path-tablet" />
-								<Nav.Link as="span">Login</Nav.Link>
+								<Nav.Link as="span" className="loginpequeño">Login</Nav.Link>
 							</Link>
 						)}
 					</div>
 				</div>
 
-				<Navbar.Toggle aria-controls="basic-navbar-nav" />
+				<Navbar.Toggle aria-controls="basic-navbar-nav nomostrar" className="nomostrar"/>
 			</div>
 			<div className="container-fluid container-navbar2">
-				<Navbar.Collapse id="basic-navbar-nav navbar-collapse">
-					<div className="containerNav1">
+				<Navbar.Collapse id="basic-navbar-nav   navbar-collapse" className="nomostrar">
+				{/* 	<div className="containerNav1">
 						<Nav className="me-auto">
 							<Link to="/clubcuriyu" className="active">
 								Home
@@ -64,7 +70,8 @@ function NavBarEdit() {
 							<Link to="/Hockey">Hockey</Link>
 							<Link to="/Rugby">Rugby</Link>
 						</Nav>
-					</div>
+					</div> */}
+
 					<div className="containerNav2 btn btn-success mostrar">
 						{isAuthenticated ? (
 							<div onClick={handleLogout} className="contenedor-iconos">
