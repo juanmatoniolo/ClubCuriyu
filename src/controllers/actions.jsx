@@ -15,7 +15,7 @@ const GetList = () => {
 		data: "",
 		texto: "",
 		url: "",
-		urlimg: "",
+		urlImg: "",
 	});
 
 	useEffect(() => {
@@ -200,15 +200,15 @@ const GetList = () => {
 							/>
 						</div>
 						<div className="mb-3">
-							<label htmlFor="urlimg" className="form-label">
+							<label htmlFor="urlImg" className="form-label">
 								URL de la Imagen:
 							</label>
 							<input
 								type="text"
 								className="form-control"
-								id="urlimg"
-								name="urlimg"
-								value={formData.urlimg}
+								id="urlImg"
+								name="urlImg"
+								value={formData.urlImg}
 								onChange={handleModalChange}
 							/>
 						</div>

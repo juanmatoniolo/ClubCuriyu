@@ -33,7 +33,7 @@ const GetList = () => {
     return (
         <div className="container mt-5">
             <h2 className="text-center mb-4">Últimas Noticias Deportivas</h2>
-            <div className="row d-flex flex-column-reverse flex-md-row">
+            <div className="modificar-noticias">
                 {loading ? (
                     // Placeholder mientras se cargan los datos
                     Array.from({ length: 4 }).map((_, index) => (
@@ -58,8 +58,8 @@ const GetList = () => {
                 ) : (
                     // Renderización de las noticias una vez cargadas
                     Object.keys(news).map((id) => (
-                        <div key={id} className="col-lg-5 col-md-6 mb-4" id={`${id}`}>
-                            <Card>
+                        <div key={id} className=" modificar-noticiass col-lg-5 col-md-6 mb-4">
+                            <Card className="mb-4">
                                 {news[id].urlVideo ? (
                                     <YouTubeVideo videoUrl={news[id].urlVideo} />
                                 ) : news[id].urlImg ? (

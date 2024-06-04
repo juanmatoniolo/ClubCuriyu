@@ -298,3 +298,34 @@
 .tooltip button:hover {
 	background-color: #0056b3;
 }
+
+.modificar-noticias {
+	display: flex;
+	flex-flow: row-reverse wrap;
+	justify-content: space-evenly;
+	padding: 0;
+	margin: 0;
+	gap: 1em;
+
+}
+
+.modificar-noticiass {
+	width: 90%;
+}
+
+/* Estilos para pantallas pequeñas */
+@media (min-width: 576px)
+/* and (max-width: 767.98px) */
+	{
+	.modificar-noticiass {
+		width: 48%;
+	}
+
+}
+
+/* Estilos para pantallas extra grandes */
+@media (min-width: 1200px) {
+	.modificar-noticiass {
+		width: 30%;
+	}
+}
