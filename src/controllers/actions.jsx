@@ -1,197 +1,236 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Modal, Button } from "react-bootstrap";
 import "./controllers.css";
 
 const GetList = () => {
-	const [news, setNews] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
-	const [editingNote, setEditingNote] = useState(null); // Estado para almacenar la nota que se está editando
-	const [showModal, setShowModal] = useState(false); // Estado para controlar la visualización del modal
+    const [news, setNews] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [currentNote, setCurrentNote] = useState({});
+    const [formData, setFormData] = useState({
+        titulo: "",
+        data: "",
+        texto: "",
+        url: "",
+        urlimg: "",
+    });
 
-	useEffect(() => {
-		const fetchNews = async () => {
-			try {
-				const response = await axios.get(
-					"https://clubcuriyu-9adcc-default-rtdb.firebaseio.com/database/news.json"
-				);
+    useEffect(() => {
+        const fetchNews = async () => {
+            try {
+                const response = await axios.get(
+                    "https://clubcuriyu-9adcc-default-rtdb.firebaseio.com/notas.json"
+                );
 
-				if (
-					response.data &&
-					typeof response.data === "object" &&
-					Object.keys(response.data).length > 0
-				) {
-					setNews(response.data);
-					setLoading(false);
-				} else {
-					setLoading(false);
-					setNews([]);
-				}
-			} catch (err) {
-				setError(err.message);
-				setLoading(false);
-			}
-		};
+                if (
+                    response.data &&
+                    typeof response.data === "object" &&
+                    Object.keys(response.data).length > 0
+                ) {
+                    setNews(response.data);
+                    setLoading(false);
+                } else {
+                    setLoading(false);
+                    setNews([]);
+                }
+            } catch (err) {
+                setError(err.message);
+                setLoading(false);
+            }
+        };
 
-		fetchNews();
-	}, []);
+        fetchNews();
+    }, []);
 
-	const handleDelete = async (id) => {
-		try {
-			// Eliminar la nota de la base de datos utilizando el id
-			await axios.delete(
-				`https://clubcuriyu-9adcc-default-rtdb.firebaseio.com/database/news/${id}.json`
-			);
-			// Actualizar la lista de noticias después de eliminar
-			setNews((prevNews) => {
-				const updatedNews = { ...prevNews };
-				delete updatedNews[id];
-				return updatedNews;
-			});
-		} catch (err) {
-			setError(err.message);
-		}
-	};
+    const handleEdit = (key) => {
+        const note = news[key];
+        setCurrentNote({ ...note, key });
+        setFormData(note);
+        setShowModal(true);
+    };
 
-	const handleEdit = async (id) => {
-		try {
-			// Obtener los datos de la nota a editar utilizando el id
-			const response = await axios.get(
-				`https://clubcuriyu-9adcc-default-rtdb.firebaseio.com/database/news/${id}.json`
-			);
-			// Almacenar los datos de la nota que se está editando
-			setEditingNote({ ...response.data, id });
-			// Mostrar el modal
-			setShowModal(true);
-		} catch (err) {
-			setError(err.message);
-		}
-	};
+    const handleDelete = async (key) => {
+        try {
+            await axios.delete(`https://clubcuriyu-9adcc-default-rtdb.firebaseio.com/notas/${key}.json`);
+            const updatedNews = { ...news };
+            delete updatedNews[key];
+            setNews(updatedNews);
+        } catch (error) {
+            console.error("Error deleting data:", error);
+        }
+    };
 
-	const handleUpdate = async () => {
-		try {
-			// Realizar una solicitud PATCH para actualizar la nota
-			await axios.patch(
-				`https://clubcuriyu-9adcc-default-rtdb.firebaseio.com/database/news/${editingNote.id}.json`,
-				editingNote
-			);
-			// Cerrar el modal después de actualizar
-			setShowModal(false);
-		} catch (err) {
-			setError(err.message);
-		}
-	};
+    const handleModalChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
 
-	if (loading) {
-		return <div>Loading...</div>;
-	}
+    const handleSaveChanges = async () => {
+        const key = currentNote.key;
+        try {
+            await axios.put(`https://clubcuriyu-9adcc-default-rtdb.firebaseio.com/notas/${key}.json`, formData);
+            const updatedNews = { ...news, [key]: formData };
+            setNews(updatedNews);
+            setShowModal(false);
+        } catch (error) {
+            console.error("Error updating data:", error);
+        }
+    };
 
-	if (error) {
-		return <div>Error: {error}</div>;
-	}
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
-	return (
-		<>
-			<div className="news-list-container">
-				<h2>Noticias</h2>
-				<div className="news-container">
-					{Object.keys(news).map((key) => {
-						const item = news[key];
-						if (item) {
-							return (
-								<div
-									key={key}
-									id={`${key}`}
-									className="news-item"
-								>
-									{item.asunto && (
-										<p className="news-subject">
-											<strong>Asunto:</strong>{" "}
-											{item.asunto}
-										</p>
-									)}
-									{item.autor && (
-										<p className="news-author">
-											<strong>Autor:</strong> {item.autor}
-										</p>
-									)}
-									{item.data && (
-										<p className="news-date">
-											<strong>Fecha:</strong> {item.data}
-										</p>
-									)}
-									{item.img1 && (
-										<img
-											src={item.img1}
-											alt="Imagen de la noticia"
-											className="news-image"
-										/>
-									)}
-									{item.texto && (
-										<p className="news-text">
-											{item.texto}
-										</p>
-									)}
-									{item.url && (
-										<a
-											href={item.url}
-											className="news-link"
-										>
-											Leer más
-										</a>
-									)}
-									<button onClick={() => handleEdit(key)}>
-										Editar
-									</button>
-									<button onClick={() => handleDelete(key)}>
-										Eliminar
-									</button>
-								</div>
-							);
-						} else {
-							return (
-								<div key={key} className="news-item">
-									Nota no disponible
-								</div>
-							);
-						}
-					})}
-				</div>
-			</div>
-			{/* Modal para editar la nota */}
-			{showModal && (
-				<div className="modal">
-					<div className="modal-content">
-						<span
-							className="close"
-							onClick={() => setShowModal(false)}
-						>
-							&times;
-						</span>
-						<h2>Editar Nota</h2>
-						<form onSubmit={handleUpdate}>
-							{/* Aquí mostrar los campos para editar la nota */}
-							<label htmlFor="asunto">Asunto:</label>
-							<input
-								type="text"
-								id="asunto"
-								name="asunto"
-								value={editingNote.asunto}
-								onChange={(e) =>
-									setEditingNote({
-										...editingNote,
-										asunto: e.target.value,
-									})
-								}
-							/>
-							{/* Otros campos de la nota */}
-							<button type="submit">Guardar Cambios</button>
-						</form>
-					</div>
-				</div>
-			)}
-		</>
-	);
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    return (
+        <div className="container mt-5">
+            <h2>Noticias</h2>
+            <div className="news-container row">
+                {Object.keys(news).map((key) => {
+                    const item = news[key];
+                    if (item) {
+                        return (
+                            <div key={key} id={`${key}`} className="col-md-4 mb-4">
+                                <div className="card">
+                                    <div className="card-body">
+                                        {item.titulo && (
+                                            <h5 className="card-title">{item.titulo}</h5>
+                                        )}
+                                        {item.data && (
+                                            <h6 className="card-subtitle mb-2 text-muted">{item.data}</h6>
+                                        )}
+                                        {item.urlimg && (
+                                            <img
+                                                src={item.urlimg}
+                                                alt="Imagen de la noticia"
+                                                className="card-img-top"
+                                            />
+                                        )}
+                                        {item.texto && (
+                                            <p className="card-text">{item.texto}</p>
+                                        )}
+                                        {item.url && (
+                                            <a href={item.url} className="card-link">
+                                                Leer más
+                                            </a>
+                                        )}
+                                        <button className="btn btn-warning me-2" onClick={() => handleEdit(key)}>
+                                            Editar
+                                        </button>
+                                        <button className="btn btn-danger" onClick={() => handleDelete(key)}>
+                                            Eliminar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    } else {
+                        return (
+                            <div key={key} className="col-md-4 mb-4">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <p className="card-text">Nota no disponible</p>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    }
+                })}
+            </div>
+
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Editar Nota</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <form>
+                        <div className="mb-3">
+                            <label htmlFor="titulo" className="form-label">
+                                Título:
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="titulo"
+                                name="titulo"
+                                value={formData.titulo}
+                                onChange={handleModalChange}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="data" className="form-label">
+                                Data:
+                            </label>
+                            <input
+                                type="date"
+                                className="form-control"
+                                id="data"
+                                name="data"
+                                value={formData.data}
+                                onChange={handleModalChange}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="texto" className="form-label">
+                                Texto:
+                            </label>
+                            <textarea
+                                className="form-control"
+                                id="texto"
+                                name="texto"
+                                maxLength="250"
+                                value={formData.texto}
+                                onChange={handleModalChange}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="url" className="form-label">
+                                URL:
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="url"
+                                name="url"
+                                value={formData.url}
+                                onChange={handleModalChange}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="urlimg" className="form-label">
+                                URL de la Imagen:
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="urlimg"
+                                name="urlimg"
+                                value={formData.urlimg}
+                                onChange={handleModalChange}
+                            />
+                        </div>
+                    </form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowModal(false)}>
+                        Cancelar
+                    </Button>
+                    <Button variant="primary" onClick={handleSaveChanges}>
+                        Guardar cambios
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </div>
+    );
 };
 
 export default GetList;

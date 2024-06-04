@@ -1,140 +1,168 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import "./controllers.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const CreateNews = () => {
-	const [newNote, setNewNote] = useState({
+const PostForm = () => {
+	const [formData, setFormData] = useState({
 		titulo: "",
-		autor: "",
-		asunto: "",
 		data: "",
-		img1: "",
 		texto: "",
 		url: "",
+		urlimg: "",
 	});
+
 	const [successMessage, setSuccessMessage] = useState("");
-	const [errorMessage, setErrorMessage] = useState("");
+	const [preview, setPreview] = useState(null);
 
-	useEffect(() => {
-		fetchCounter();
-	}, []); // Se ejecuta solo una vez al montar el componente
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setFormData({
+			...formData,
+			[name]: value,
+		});
 
-	const fetchCounter = async () => {
-		try {
-			const counterResponse = await axios.get(
-				"https://clubcuriyu-9adcc-default-rtdb.firebaseio.com/database/counter.json"
-			);
-			const counter = counterResponse.data || 0; // Manejar el caso cuando no hay contador
-			setNewNote((prevNote) => ({
-				...prevNote,
-				id: counter + 1,
-			}));
-		} catch (error) {
-			console.error("Error fetching counter:", error);
+		// Mostrar vista previa para URL de imagen o video
+		if (name === "urlimg") {
+			if (value.match(/\.(jpeg|jpg|gif|png)$/) != null) {
+				setPreview(
+					<img
+						src={value}
+						alt="Vista previa"
+						className="img-fluid mt-3"
+					/>
+				);
+			} else if (
+				value.match(
+					/^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/
+				)
+			) {
+				const videoId = value.split("v=")[1];
+				const ampersandPosition = videoId.indexOf("&");
+				const cleanVideoId =
+					ampersandPosition !== -1
+						? videoId.substring(0, ampersandPosition)
+						: videoId;
+				setPreview(
+					<iframe
+						width="560"
+						height="315"
+						src={`https://www.youtube.com/embed/${cleanVideoId}`}
+						frameBorder="0"
+						allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+						allowFullScreen
+						title="Vista previa de video"
+						className="img-fluid mt-3"
+					></iframe>
+				);
+			} else {
+				setPreview(null);
+			}
 		}
 	};
 
-	const handleInputChange = (e) => {
-		const { name, value } = e.target;
-		setNewNote((prevNote) => ({
-			...prevNote,
-			[name]: value,
-		}));
-	};
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		const url =
+			"https://clubcuriyu-9adcc-default-rtdb.firebaseio.com/notas.json";
 
-	const handleCreateNote = async () => {
 		try {
-			await axios.put(
-				`https://clubcuriyu-9adcc-default-rtdb.firebaseio.com/database/news/${newNote.id}.json`,
-				{ NOTA: newNote }
-			);
-
-			await axios.put(
-				"https://clubcuriyu-9adcc-default-rtdb.firebaseio.com/database/counter.json",
-				newNote.id
-			);
-
-			setSuccessMessage("¡La noticia se ha creado exitosamente!");
-			setErrorMessage("");
-
-			setNewNote({
+			const response = await axios.post(url, formData);
+			console.log("Data posted successfully:", response.data);
+			setSuccessMessage("Datos cargados con éxito!");
+			setFormData({
 				titulo: "",
-				autor: "",
-				asunto: "",
 				data: "",
-				img1: "",
 				texto: "",
 				url: "",
+				urlimg: "",
 			});
+			setPreview(null);
 		} catch (error) {
-			setErrorMessage("Error al crear la noticia. Intenta nuevamente.");
-			setSuccessMessage("");
-			console.error("Error creating note:", error);
+			console.error("Error posting data:", error);
 		}
 	};
 
 	return (
-		<>
-			<div className="news-manager">
-				<h2>Crear Nueva Noticia</h2>
-				{successMessage && (
-					<p className="success-message">{successMessage}</p>
-				)}
-				{errorMessage && (
-					<p className="error-message">{errorMessage}</p>
-				)}
-				<input
-					type="text"
-					name="titulo"
-					placeholder="Título"
-					value={newNote.titulo}
-					onChange={handleInputChange}
-				/>
-				<input
-					type="text"
-					name="autor"
-					placeholder="Autor"
-					value={newNote.autor}
-					onChange={handleInputChange}
-				/>
-				<input
-					type="text"
-					name="asunto"
-					placeholder="Asunto"
-					value={newNote.asunto}
-					onChange={handleInputChange}
-				/>
-				<input
-					type="text"
-					name="data"
-					placeholder="Fecha"
-					value={newNote.data}
-					onChange={handleInputChange}
-				/>
-				<input
-					type="text"
-					name="img1"
-					placeholder="URL de la imagen"
-					value={newNote.img1}
-					onChange={handleInputChange}
-				/>
-				<textarea
-					name="texto"
-					placeholder="Texto"
-					value={newNote.texto}
-					onChange={handleInputChange}
-				></textarea>
-				<input
-					type="text"
-					name="url"
-					placeholder="URL de la nota"
-					value={newNote.url}
-					onChange={handleInputChange}
-				/>
-				<button onClick={handleCreateNote}>Crear Noticia</button>
-			</div>
-		</>
+		<div className="container col-12 col-md-8 col-lg-6 mt-5">
+			<h2 className="mb-4">Crear Nota</h2>
+			<form onSubmit={handleSubmit}>
+				<div className="mb-3">
+					<label htmlFor="titulo" className="form-label">
+						Título:
+					</label>
+					<input
+						type="text"
+						className="form-control"
+						id="titulo"
+						name="titulo"
+						value={formData.titulo}
+						onChange={handleChange}
+					/>
+				</div>
+				<div className="mb-3">
+					<label htmlFor="data" className="form-label">
+						Data:
+					</label>
+					<input
+						type="date"
+						className="form-control"
+						id="data"
+						name="data"
+						value={formData.data}
+						onChange={handleChange}
+					/>
+				</div>
+				<div className="mb-3">
+					<label htmlFor="texto" className="form-label">
+						Texto (máximo 250 caracteres):
+					</label>
+					<textarea
+						className="form-control"
+						id="texto"
+						name="texto"
+						maxLength="250"
+						value={formData.texto}
+						onChange={handleChange}
+					/>
+				</div>
+				<div className="mb-3">
+					<label htmlFor="url" className="form-label">
+						URL:
+					</label>
+					<input
+						type="text"
+						className="form-control"
+						id="url"
+						name="url"
+						value={formData.url}
+						onChange={handleChange}
+					/>
+				</div>
+				<div className="mb-3">
+					<label htmlFor="urlimg" className="form-label">
+						URL de la Imagen o Video:
+					</label>
+					<input
+						type="text"
+						className="form-control"
+						id="urlimg"
+						name="urlimg"
+						value={formData.urlimg}
+						onChange={handleChange}
+					/>
+				</div>
+				{preview}
+				<button type="submit" className="btn btn-primary">
+					Enviar
+				</button>
+			</form>
+			{successMessage && (
+				<div className="alert alert-success mt-3" role="alert">
+					{successMessage}
+				</div>
+			)}
+		</div>
 	);
 };
 
-export default CreateNews;
+export default PostForm;
