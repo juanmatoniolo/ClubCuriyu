@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/clubcuriyu/static/css/main.5b68e047.css",
-    "main.js": "/clubcuriyu/static/js/main.e54ab050.js",
+    "main.css": "/clubcuriyu/static/css/main.466f3ffa.css",
+    "main.js": "/clubcuriyu/static/js/main.48e18dcf.js",
     "static/media/4.jpg": "/clubcuriyu/static/media/4.4e099a91edbc886bfd32.jpg",
     "static/media/2.jpg": "/clubcuriyu/static/media/2.8b535614f5ea4896c882.jpg",
     "static/media/6.jpg": "/clubcuriyu/static/media/6.5d37a1de9fd0b839030c.jpg",
@@ -15,11 +15,11 @@
     "static/media/10.jpg": "/clubcuriyu/static/media/10.532c145fd8e2f0751086.jpg",
     "static/media/curiyu-cambios.png": "/clubcuriyu/static/media/curiyu-cambios.272bfdffb48116bc15ee.png",
     "index.html": "/clubcuriyu/index.html",
-    "main.5b68e047.css.map": "/clubcuriyu/static/css/main.5b68e047.css.map",
-    "main.e54ab050.js.map": "/clubcuriyu/static/js/main.e54ab050.js.map"
+    "main.466f3ffa.css.map": "/clubcuriyu/static/css/main.466f3ffa.css.map",
+    "main.48e18dcf.js.map": "/clubcuriyu/static/js/main.48e18dcf.js.map"
   },
   "entrypoints": [
-    "static/css/main.5b68e047.css",
-    "static/js/main.e54ab050.js"
+    "static/css/main.466f3ffa.css",
+    "static/js/main.48e18dcf.js"
   ]
 }
