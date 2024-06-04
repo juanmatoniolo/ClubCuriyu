@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Card, Button } from "react-bootstrap";
 import "./controllers.css";
 
 const GetList = () => {
-    const [news, setNews] = useState([]);
+    const [news, setNews] = useState({});
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchNews = async () => {
@@ -15,21 +15,14 @@ const GetList = () => {
                     "https://clubcuriyu-9adcc-default-rtdb.firebaseio.com/notas.json"
                 );
 
-                // Verificar si la respuesta contiene datos válidos
-                if (
-                    response.data &&
-                    typeof response.data === "object" &&
-                    Object.keys(response.data).length > 0
-                ) {
+                if (response.data) {
                     setNews(response.data);
-                    setLoading(false);
                 } else {
-                    // Si no hay datos válidos, establecer el estado de carga en falso y dejar el estado de noticias vacío
-                    setLoading(false);
-                    setNews([]);
+                    setNews({});
                 }
+                setLoading(false);
             } catch (err) {
-                setError(err.message);
+                console.error("Error fetching data:", err);
                 setLoading(false);
             }
         };
@@ -37,64 +30,74 @@ const GetList = () => {
         fetchNews();
     }, []);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
-
     return (
         <div className="container mt-5">
-            <h2>Noticias</h2>
-            <div className="news-container row">
-                {Object.keys(news).map((key) => {
-                    const item = news[key];
-                    if (item) {
-                        return (
-                            <div key={key} id={`${key}`} className="col-md-4 mb-4">
-                                <div className="card">
-                                    <div className="card-body">
-                                        {item.titulo && (
-                                            <h5 className="card-title">{item.titulo}</h5>
-                                        )}
-                                        {item.data && (
-                                            <h6 className="card-subtitle mb-2 text-muted">{item.data}</h6>
-                                        )}
-                                        {item.urlimg && (
-                                            <img
-                                                src={item.urlimg}
-                                                alt="Imagen de la noticia"
-                                                className="card-img-top"
-                                            />
-                                        )}
-                                        {item.texto && (
-                                            <p className="card-text">{item.texto}</p>
-                                        )}
-                                        {item.url && (
-                                            <a href={item.url} className="card-link">
-                                                Leer más
-                                            </a>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    } else {
-                        return (
-                            <div key={key} className="col-md-4 mb-4">
-                                <div className="card">
-                                    <div className="card-body">
-                                        <p className="card-text">Nota no disponible</p>
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    }
-                })}
+            <h2 className="text-center mb-4">Últimas Noticias Deportivas</h2>
+            <div className="row d-flex flex-column-reverse flex-md-row">
+                {loading ? (
+                    // Placeholder mientras se cargan los datos
+                    Array.from({ length: 4 }).map((_, index) => (
+                        <div key={index} className="col-lg-4 col-md-6 mb-4">
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>
+                                        <div className="placeholder-item placeholder-heading mb-2" />
+                                    </Card.Title>
+                                    <Card.Text>
+                                        <div className="placeholder-item placeholder-text mb-2" />
+                                        <div className="placeholder-item placeholder-text mb-2" />
+                                        <div className="placeholder-item placeholder-text mb-2" />
+                                    </Card.Text>
+                                    <Button variant="primary" disabled>
+                                        Loading...
+                                    </Button>
+                                </Card.Body>
+                            </Card>
+                        </div>
+                    ))
+                ) : (
+                    // Renderización de las noticias una vez cargadas
+                    Object.keys(news).map((id) => (
+                        <div key={id} className="col-lg-5 col-md-6 mb-4" id={`${id}`}>
+                            <Card>
+                                {news[id].urlVideo ? (
+                                    <YouTubeVideo videoUrl={news[id].urlVideo} />
+                                ) : news[id].urlImg ? (
+                                    <Card.Img variant="top" src={news[id].urlImg} />
+                                ) : null}
+                                <Card.Body>
+                                    {news[id].titulo && <Card.Title>{news[id].titulo}</Card.Title>}
+                                    {news[id].data && (
+                                        <Card.Text className="text-muted">
+                                            Publicado el {news[id].data}
+                                        </Card.Text>
+                                    )}
+                                    {news[id].texto && <Card.Text>{news[id].texto}</Card.Text>}
+                                </Card.Body>
+                            </Card>
+                        </div>
+                    ))
+                )}
             </div>
         </div>
+    );
+};
+
+// Componente para incrustar el reproductor de video de YouTube
+const YouTubeVideo = ({ videoUrl }) => {
+    // Extraer el ID del video de la URL de YouTube
+    const videoId = videoUrl.split("v=")[1];
+    // Devolver el reproductor de video de YouTube
+    return (
+        <iframe
+            title="Contenido de la URL"
+            width="100%"
+            height="200"
+            src={`https://www.youtube.com/embed/${videoId}`}
+            frameBorder="0"
+            allowFullScreen
+            className="card-img-top"
+        ></iframe>
     );
 };
 

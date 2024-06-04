@@ -4,7 +4,6 @@ function CrudComponent() {
 	return (
 		<>
 			<AddList />
-
 			<Actions />
 		</>
 	);
