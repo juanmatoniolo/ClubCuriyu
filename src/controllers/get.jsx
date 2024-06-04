@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Fade, Ratio } from "react-bootstrap";
 import "./controllers.css";
 
 const GetList = () => {
@@ -31,73 +31,93 @@ const GetList = () => {
     }, []);
 
     return (
-        <div className="container mt-5">
+        <section className="rugbyContainer">
+
+        <div className="container  mt-5">
             <h2 className="text-center mb-4">Últimas Noticias Deportivas</h2>
-            <div className="modificar-noticias">
-                {loading ? (
-                    // Placeholder mientras se cargan los datos
-                    Array.from({ length: 4 }).map((_, index) => (
-                        <div key={index} className="col-lg-4 col-md-6 mb-4">
-                            <Card>
-                                <Card.Body>
-                                    <Card.Title>
-                                        <div className="placeholder-item placeholder-heading mb-2" />
-                                    </Card.Title>
-                                    <Card.Text>
-                                        <div className="placeholder-item placeholder-text mb-2" />
-                                        <div className="placeholder-item placeholder-text mb-2" />
-                                        <div className="placeholder-item placeholder-text mb-2" />
-                                    </Card.Text>
-                                    <Button variant="primary" disabled>
-                                        Loading...
-                                    </Button>
-                                </Card.Body>
-                            </Card>
-                        </div>
-                    ))
-                ) : (
-                    // Renderización de las noticias una vez cargadas
-                    Object.keys(news).map((id) => (
-                        <div key={id} className=" modificar-noticiass col-lg-5 col-md-6 mb-4">
-                            <Card className="mb-4">
-                                {news[id].urlVideo ? (
-                                    <YouTubeVideo videoUrl={news[id].urlVideo} />
-                                ) : news[id].urlImg ? (
-                                    <Card.Img variant="top" src={news[id].urlImg} />
-                                ) : null}
-                                <Card.Body>
-                                    {news[id].titulo && <Card.Title>{news[id].titulo}</Card.Title>}
-                                    {news[id].data && (
-                                        <Card.Text className="text-muted">
-                                            Publicado el {news[id].data}
-                                        </Card.Text>
-                                    )}
-                                    {news[id].texto && <Card.Text>{news[id].texto}</Card.Text>}
-                                </Card.Body>
-                            </Card>
-                        </div>
-                    ))
-                )}
+            <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+                {Object.keys(news).map((id) => (
+                    <div key={id} className="col">
+                        <NewsCard news={news[id]} />
+                    </div>
+                ))}
             </div>
         </div>
+        </section>
+
     );
 };
 
-// Componente para incrustar el reproductor de video de YouTube
-const YouTubeVideo = ({ videoUrl }) => {
-    // Extraer el ID del video de la URL de YouTube
-    const videoId = videoUrl.split("v=")[1];
-    // Devolver el reproductor de video de YouTube
+const NewsCard = ({ news }) => {
+    const [open, setOpen] = useState(false);
+
     return (
-        <iframe
-            title="Contenido de la URL"
-            width="100%"
-            height="200"
-            src={`https://www.youtube.com/embed/${videoId}`}
-            frameBorder="0"
-            allowFullScreen
-            className="card-img-top"
-        ></iframe>
+        <Card>
+            {news.urlVideo ? (
+                <YouTubeVideo videoUrl={news.urlVideo} />
+            ) : news.urlImg ? (
+                <Ratio aspectRatio="16x9">
+                    <Card.Img
+                        variant="top"
+                        src={news.urlImg}
+                        className="card-img-custom"
+                        style={{ objectFit: "cover" }}
+                    />
+                </Ratio>
+            ) : null}
+            <Card.Body>
+                {news.titulo && <Card.Title>{news.titulo}</Card.Title>}
+                {news.data && (
+                    <Card.Text className="text-muted">
+                        Publicado el {news.data}
+                    </Card.Text>
+                )}
+                {news.texto && (
+                    <div style={{ maxHeight: open ? "none" : "100px", overflow: "hidden" }}>
+                        <Fade in={!open}>
+                            <div>
+                                <Card.Text>
+                                    {news.texto.length > 100
+                                        ? `${news.texto.substring(0, 100)}...`
+                                        : news.texto}
+                                </Card.Text>
+                            </div>
+                        </Fade>
+                        <Button
+                            onClick={() => setOpen(!open)}
+                            variant="primary"
+                            size="sm"
+                            className="mt-2 btn-card"
+                        >
+                            {open ? "Cerrar" : "Leer más"}
+                        </Button>
+                        <Fade in={open}>
+                            <div>
+                                <Card.Text>{news.texto}</Card.Text>
+                            </div>
+                        </Fade>
+                    </div>
+                )}
+            </Card.Body>
+        </Card>
+    );
+};
+
+const YouTubeVideo = ({ videoUrl }) => {
+    const videoId = videoUrl.split("v=")[1];
+    return (
+        <Ratio aspectRatio="16x9">
+            <iframe
+                title="Contenido de la URL"
+                width="100%"
+                height="200"
+                src={`https://www.youtube.com/embed/${videoId}`}
+                frameBorder="0"
+                allowFullScreen
+                className="card-img-custom"
+                style={{ objectFit: "cover" }}
+            ></iframe>
+        </Ratio>
     );
 };
 

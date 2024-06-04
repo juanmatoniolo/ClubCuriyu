@@ -286,6 +286,11 @@
 	border-radius: 3px;
 }
 
+.rugbyContainer {
+	margin-bottom: 2em;
+	min-height: 100vh;
+}
+
 .tooltip button {
 	padding: 8px 16px;
 	background-color: #007bff;
@@ -321,6 +326,7 @@
 		width: 48%;
 	}
 
+	.card {}
 }
 
 /* Estilos para pantallas extra grandes */
