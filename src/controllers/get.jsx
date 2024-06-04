@@ -73,7 +73,7 @@ const NewsCard = ({ news }) => {
                     </Card.Text>
                 )}
                 {news.texto && (
-                    <div style={{ maxHeight: open ? "none" : "100px", overflow: "hidden" }}>
+                    <div style={{ maxHeight: open ? "none" : "120px", overflow: "hidden" }}>
                         <Fade in={!open}>
                             <div>
                                 <Card.Text>
